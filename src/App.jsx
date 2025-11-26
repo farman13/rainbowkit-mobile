@@ -1,0 +1,43 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { WagmiProvider } from 'wagmi';
+import {
+  mainnet,
+  polygon,
+  optimism,
+  arbitrum,
+  base,
+} from 'wagmi/chains';
+import {
+  QueryClientProvider,
+  QueryClient,
+} from "@tanstack/react-query";
+
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+const config = getDefaultConfig({
+  appName: 'My RainbowKit App',
+  projectId: '6dd15a3684137adf8eb5ed126f061236',
+  chains: [mainnet, polygon, optimism, arbitrum, base],
+  ssr: true, // If your dApp uses server side rendering (SSR)
+});
+
+
+const queryClient = new QueryClient();
+const App = () => {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          <ConnectButton />
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+};
+
+export default App
